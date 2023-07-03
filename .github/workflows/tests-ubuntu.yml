@@ -32,7 +32,8 @@ jobs:
     - name: disable color
       run: |
         mkdir ~/.cht.sh
-        echo "CHTSH_QUERY_OPTIONS=\"T\"" >> ~/.cht.sh/cht.sh.conf
+        echo 'CHTSH_QUERY_OPTIONS="T"' >> ~/.cht.sh/cht.sh.conf
+        cat ~/.cht.sh/cht.sh.conf
     - name: run bash tests
       run: bash tests/run-tests.sh
     - name: run pytest
