@@ -11,10 +11,13 @@ on:
     inputs:
       build:
         default: true
+        type: boolean
       docker:
         default: false
+        type: boolean
       docker-standalone:
         default: false
+        type: boolean
 
 jobs:
   build:
