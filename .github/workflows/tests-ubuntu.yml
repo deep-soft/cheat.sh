@@ -21,7 +21,7 @@ on:
 
 jobs:
   build:
-    if: ${{ env.inputs.build }}
+    if: ${{ inputs.build }}
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v2
@@ -38,7 +38,7 @@ jobs:
       run: pytest lib/
 
   docker:
-    if: ${{ env.inputs.docker }}  
+    if: ${{ inputs.docker }}  
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v2
@@ -54,7 +54,7 @@ jobs:
     - run: CHEATSH_TEST_STANDALONE=NO bash tests/run-tests.sh
 
   docker-standalone:
-    if: ${{ env.inputs.docker-standalone }}
+    if: ${{ inputs.docker-standalone }}
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v2
