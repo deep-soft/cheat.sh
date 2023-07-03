@@ -8,23 +8,35 @@ on:
 #  schedule:
 #    - cron:  '0 9 * * 4'
   workflow_dispatch:
+    inputs:
+      build:
+        default: true
+      docker:
+        default: false
+      docker-standalone:
+        default: false
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    if: ${{ env.inputs.build }}
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v2
     - name: install dependencies
       run: pip install --upgrade -r requirements.txt
     - name: fetch upstream cheat sheets
       run: python lib/fetch.py fetch-all
+    - name: disable color
+      run: |
+        echo "CHTSH_QUERY_OPTIONS=\"T\"" >> ~/.cht.sh/cht.sh.conf
     - name: run bash tests
       run: bash tests/run-tests.sh
     - name: run pytest
       run: pytest lib/
 
   docker:
-    runs-on: ubuntu-20.04
+    if: ${{ env.inputs.docker }}  
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v2
     - run: docker-compose build
@@ -39,7 +51,8 @@ jobs:
     - run: CHEATSH_TEST_STANDALONE=NO bash tests/run-tests.sh
 
   docker-standalone:
-    runs-on: ubuntu-20.04
+    if: ${{ env.inputs.docker-standalone }}
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v2
     - run: docker-compose build
