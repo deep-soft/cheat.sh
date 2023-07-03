@@ -31,6 +31,7 @@ jobs:
       run: python lib/fetch.py fetch-all
     - name: disable color
       run: |
+        mkdir ~/.cht.sh
         echo "CHTSH_QUERY_OPTIONS=\"T\"" >> ~/.cht.sh/cht.sh.conf
     - name: run bash tests
       run: bash tests/run-tests.sh
